@@ -35,7 +35,7 @@ Character::~Character()
 
 
 // Functions
-void Character::Initalize(std::string name)
+void Character::initalize(std::string name)
 {
 	this->xPos = 0.0;
 	this->yPos = 0.0;
@@ -43,7 +43,7 @@ void Character::Initalize(std::string name)
 	this->name = name;
 	this->level = 1;
 	this->exp = 0;
-	this->expNext = (50 / 3) * (pow(level, 3) - 6 * pow(level, 3) + (17 * level) - 11);
+	this->expNext = static_cast<int>((50 / 3) * (pow(level, 3) - 6 * pow(level, 3) + (17 * level) - 11)) + 100;
 
 	this->strength = 5;
 	this->vitality = 5;
@@ -63,7 +63,7 @@ void Character::Initalize(std::string name)
 	this->skillPoints = 0;
 }
 
-void Character::PrintStats() const
+void Character::printStats() const
 {
 	cout << "-- Character sheet --" << endl;
 	cout << "Name: " << this->name << endl;
@@ -85,13 +85,13 @@ void Character::PrintStats() const
 
 }
 
-void Character::LevelUp()
+void Character::levelUp()
 {
 	while (exp >= expNext)
 	{
 		this->exp -= expNext;
 		level++;
-		this->expNext = (50 / 3) * (pow(level, 3) - 6 * pow(level, 3) + (17 * level) - 11);
+		this->expNext = static_cast<int>((50 / 3) * (pow(level, 3) - 6 * pow(level, 3) + (17 * level) - 11)) + 100;
 
 		this->statPoints++;
 		this->skillPoints++;

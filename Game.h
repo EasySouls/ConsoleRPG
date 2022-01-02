@@ -9,8 +9,8 @@ public:
 	virtual ~Game();
 
 	// Functions
-	void InitGame();
-	void MainMenu();
+	void initGame();
+	void mainMenu();
 
 	// Accessors
 	inline bool getPlaying() const { return this->playing; }

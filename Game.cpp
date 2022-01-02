@@ -12,17 +12,17 @@ Game::~Game()
 }
 
 // Functions
-void Game::InitGame()
+void Game::initGame()
 {
 	string name;
 	cout << "Enter the name of your character: ";
 	getline(cin, name);
 
-	player.Initalize(name);
+	player.initalize(name);
 
 }
 
-void Game::MainMenu()
+void Game::mainMenu()
 {
 	cout << "MAIN MENU" << endl;
 	cout << "0: Quit" << endl;
@@ -50,7 +50,7 @@ void Game::MainMenu()
 	case 4:
 		break;
 	case 5:
-		player.PrintStats();
+		player.printStats();
 		break;
 	default:
 		break;

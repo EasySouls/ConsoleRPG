@@ -1,7 +1,6 @@
 #pragma once
-#include <string>
-#include <iostream>
-#include <iomanip>
+#include "Inventory.h"
+
 using namespace std;
 
 class Character
@@ -11,9 +10,9 @@ public:
 	virtual ~Character();
 
 	// Functions
-	void Initalize(string name);
-	void PrintStats() const;
-	void LevelUp();
+	void initalize(string name);
+	void printStats() const;
+	void levelUp();
 
 	// Accessors
 	inline const double& getX() const { return this->xPos; }

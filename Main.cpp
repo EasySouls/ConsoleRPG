@@ -5,11 +5,15 @@ int main()
 {
 	srand(time(NULL));
 	Game game;
-	game.InitGame();
+	game.initGame();
+
+	Inventory inv;
+	inv.addItem(Item());
+	inv.debugPrint();
 
 	while (game.getPlaying())
 	{
-		game.MainMenu();
+		game.mainMenu();
 	}
 
 	return 0;
