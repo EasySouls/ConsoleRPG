@@ -13,6 +13,7 @@ public:
 	void initalize(string name);
 	void printStats() const;
 	void levelUp();
+	string getAsString() const;
 
 	// Accessors
 	inline const double& getX() const { return this->xPos; }
