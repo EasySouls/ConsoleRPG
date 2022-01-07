@@ -50,14 +50,14 @@ void Character::initalize(std::string name)
 	this->dexterity = 5;
 	this->intelligence = 5;
 
-	this->hp = 10;
-	this->hpMax = 10;
-	this->stamina = 10;
-	this->staminaMax = 10;
-	this->damageMin = 1;
-	this->damageMax = 4;
-	this->defence = 1;
-	this->luck = 1;
+	this->hp = (this->vitality*2) + (this->strength/2);
+	this->hpMax = hp;
+	this->staminaMax = this->vitality + (this->vitality/2) + (this->dexterity/3);
+	this->stamina = staminaMax;
+	this->damageMin = this->strength;
+	this->damageMax = this->strength+2;
+	this->defence = this->dexterity + (this->intelligence/2);
+	this->luck = this->intelligence;
 
 	this->statPoints = 0;
 	this->skillPoints = 0;

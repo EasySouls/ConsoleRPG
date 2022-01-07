@@ -8,7 +8,7 @@ int main()
 	game.initGame();
 
 	Inventory inv;
-	inv.addItem(Item());
+	inv.addItem(Armor());
 	inv.debugPrint();
 
 	while (game.getPlaying())

@@ -35,6 +35,10 @@ private:
 	double xPos;
 	double yPos;
 
+	Inventory inwentory;
+	Weapon weapon;
+	Armor armor;
+
 	string name;
 	int level;
 	int exp;
