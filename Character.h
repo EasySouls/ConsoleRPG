@@ -1,5 +1,6 @@
 #pragma once
 #include "Inventory.h"
+#include "Enemy.h"
 
 using namespace std;
 
@@ -28,6 +29,7 @@ public:
 	inline const int& getDamageMin() const { return this->damageMin; }
 	inline const int& getDamageMax() const { return this->damageMax; }
 	inline const int& getDefence() const { return this->defence; }
+	inline const int& getAccuracy() const { return this->accuracy; }
 
 	// Modifiers
 
@@ -37,7 +39,10 @@ private:
 
 	Inventory inwentory;
 	Weapon weapon;
-	Armor armor;
+	Armor armor_head;
+	Armor armor_chest;
+	Armor armor_arms;
+	Armor armor_legs;
 
 	string name;
 	int level;
@@ -56,6 +61,7 @@ private:
 	int damageMin;
 	int damageMax;
 	int defence;
+	int accuracy;
 	int luck;
 
 	int statPoints;

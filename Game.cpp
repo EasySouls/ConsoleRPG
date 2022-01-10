@@ -97,3 +97,8 @@ void Game::loadCharacters()
 {
 
 }
+
+void Game::Travel()
+{
+
+}
