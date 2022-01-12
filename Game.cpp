@@ -100,5 +100,8 @@ void Game::loadCharacters()
 
 void Game::Travel()
 {
+	this->characters[activeCharacter].travel();
 
+	Event ev;
+	ev.generateEvent(this->characters[activeCharacter]);
 }

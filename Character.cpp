@@ -4,6 +4,9 @@ Character::Character()
 {
 	xPos = 0.0;
 	yPos = 0.0;
+	distanceTraveled = 0;
+
+	gold = 0;
 
 	name = "";
 	level = 0;
@@ -40,6 +43,9 @@ void Character::initalize(std::string name)
 {
 	this->xPos = 0.0;
 	this->yPos = 0.0;
+	this->distanceTraveled = 0;
+
+	this->gold = 100;
 
 	this->name = name;
 	this->level = 1;

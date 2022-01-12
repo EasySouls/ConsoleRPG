@@ -1,8 +1,7 @@
 #pragma once
-#include "Character.h"
+#include "Event.h"
 #include <ctime>
 #include <vector>
-#include <fstream>
 
 class Game
 {
