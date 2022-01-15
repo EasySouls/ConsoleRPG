@@ -34,10 +34,38 @@ void Event::generateEvent(Character &character)
 // Different events
 void Event::enemyEncounter(Character& character)
 {
-
+	//while()
 }
 
 void Event::puzzleEncounter(Character& character)
 {
+	cin.ignore();
+	bool completed = false;
+	int userAns = 0;
+	int chances = 3;
+	Puzzle puzzle("Puzzles/p1.txt"); 
 
+	while (!completed && chances > 0)
+	{
+		chances--;
+		cout << puzzle.getAsString() << endl;
+
+		cout << "\nYour answer: ";
+		cin >> userAns;
+		cout << "\n";
+
+		if (puzzle.getCorrectAns() == userAns)
+		{
+			completed = true;
+			//GIVE USER EXP ETC AND CONTINUE
+		}
+	}
+	if (completed)
+	{
+		cout << "You succeeded in solving the puzzle.\n" << endl;
+	}
+	else
+	{
+		cout << "In the end, you could not solve the puzzle and returned to adventuring\n" << endl;
+	}
 }

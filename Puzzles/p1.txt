@@ -1,0 +1,6 @@
+You see a sword in a stone. What do you do?
+3
+You pull it out.
+You walk off.
+You keep staring at it while trying to remember something about the legend of King Arthur.
+0

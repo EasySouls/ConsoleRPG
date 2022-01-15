@@ -38,31 +38,41 @@ void Game::mainMenu()
 
 	switch (choice)
 	{
-	case 0:
+	case 0: //QUIT
 		playing = false;
 		break;
-	case 1:
+
+	case 1: //TRAVEL
+		Travel();
 		break;
-	case 2:
+
+	case 2: //SHOP
 		break;
-	case 3:
+
+	case 3: //LEVEL UP
 		break;
-	case 4:
+
+	case 4: //REST
 		break;
-	case 5:
+
+	case 5: //CHARACTER SHEET
 		characters[activeCharacter].printStats();
 		break;
-	case 6:
+
+	case 6: //CREATE NEW CHARACTER
 		cin.ignore();
 		createNewCharacter();
 		saveCharacters();
 		break;
-	case 7:
+
+	case 7: //SAVE CHARACTER
 		saveCharacters();
 		break;
-	case 8:
+
+	case 8: //LOAD CHARACTERS
 		loadCharacters();
 		break;
+
 	default:
 		break;
 	}

@@ -7,10 +7,6 @@ int main()
 	Game game;
 	game.initGame();
 
-	Inventory inv;
-	inv.addItem(Armor());
-	inv.debugPrint();
-
 	while (game.getPlaying())
 	{
 		game.mainMenu();
