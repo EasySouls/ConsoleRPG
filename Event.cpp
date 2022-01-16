@@ -43,29 +43,47 @@ void Event::puzzleEncounter(Character& character)
 	bool completed = false;
 	int userAns = 0;
 	int chances = 3;
+	// You get exp depending on your current level
+	int rewardExp = (chances * (character.getLevel()) * 50) / 2;
 	Puzzle puzzle("Puzzles/p1.txt"); 
 
 	while (!completed && chances > 0)
 	{
-		chances--;
 		cout << puzzle.getAsString() << endl;
+		cout << "Remaining chances: " << chances << endl;
 
 		cout << "\nYour answer: ";
 		cin >> userAns;
-		cout << "\n";
+		
+		while (cin.fail())
+		{
+			cout << "Wrong input!" << endl;
+			cin.clear();
+			cin.ignore(100, '\n');
+
+			cout << "Your answer: ";
+			cin >> userAns;
+		}
+
+		cin.ignore(100, '\n');
+		cout << endl;
 
 		if (puzzle.getCorrectAns() == userAns)
 		{
 			completed = true;
+
+			character.gainExp(rewardExp);
 			//GIVE USER EXP ETC AND CONTINUE
 		}
+		chances--;
 	}
 	if (completed)
 	{
-		cout << "You succeeded in solving the puzzle.\n" << endl;
+		cout << "You succeeded in solving the puzzle." << endl;
+		cout << "And your character gained " << rewardExp << " exp!\n" << endl;
 	}
 	else
 	{
-		cout << "In the end, you could not solve the puzzle and returned to adventuring\n" << endl;
+		cout << "In the end, you could not solve the puzzle and returned to adventuring\n\n" << endl;
 	}
 }

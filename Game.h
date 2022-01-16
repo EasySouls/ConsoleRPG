@@ -2,6 +2,7 @@
 #include "Event.h"
 #include <ctime>
 #include <vector>
+#include <sstream>
 
 class Game
 {

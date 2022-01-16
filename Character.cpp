@@ -2,8 +2,6 @@
 
 Character::Character()
 {
-	xPos = 0.0;
-	yPos = 0.0;
 	distanceTraveled = 0;
 
 	gold = 0;
@@ -32,6 +30,38 @@ Character::Character()
 	skillPoints = 0;
 }
 
+Character::Character(string name, int distanceTraveled, int gold, int level, int exp, int strength, int vitality, int dexterity, int intelligence, int hp, int stamina, int statPoints, int skillPoints)
+{
+	this->distanceTraveled = distanceTraveled;
+
+	this->gold = gold;
+
+	this->name = name;
+	this->level = level;
+	this->exp = exp;
+	this->expNext = 0;
+
+	this->strength = strength;
+	this->vitality = vitality;
+	this->dexterity = dexterity;
+	this->intelligence = intelligence;
+
+	this->hp = hp;
+	this->hpMax = 0;
+	this->stamina = stamina;
+	this->staminaMax = 0;
+	this->damageMin = 0;
+	this->damageMax = 0;
+	this->defence = 0;
+	this->accuracy = 0;
+	this->luck = 0;
+
+	this->statPoints = statPoints;
+	this->skillPoints = skillPoints;
+
+	this->updateStats();
+}
+
 Character::~Character()
 {
 
@@ -41,8 +71,6 @@ Character::~Character()
 // Functions
 void Character::initalize(std::string name)
 {
-	this->xPos = 0.0;
-	this->yPos = 0.0;
 	this->distanceTraveled = 0;
 
 	this->gold = 100;
@@ -50,19 +78,19 @@ void Character::initalize(std::string name)
 	this->name = name;
 	this->level = 1;
 	this->exp = 0;
-	this->expNext = static_cast<int>((50 / 3) * (pow(level, 3) - 6 * pow(level, 3) + (17 * level) - 11)) + 100;
+	this->expNext = 100;
 
 	this->strength = 5;
 	this->vitality = 5;
 	this->dexterity = 5;
 	this->intelligence = 5;
 
-	this->hp = (this->vitality*2) + (this->strength/2);
-	this->hpMax = hp;
+	this->hpMax = (this->vitality * 2) + (this->strength / 2);
+	this->hp = hpMax;
 	this->staminaMax = this->vitality + (this->vitality/2) + (this->dexterity/3);
 	this->stamina = staminaMax;
 	this->damageMin = this->strength;
-	this->damageMax = this->strength+2;
+	this->damageMax = this->strength + (this->level * 2);
 	this->defence = this->dexterity + (this->intelligence/2);
 	this->accuracy = this->dexterity / 2;
 	this->luck = this->intelligence;
@@ -96,18 +124,37 @@ void Character::printStats() const
 
 void Character::levelUp()
 {
-	while (exp >= expNext)
+	if (exp >= expNext)
 	{
 		this->exp -= expNext;
 		level++;
-		this->expNext = static_cast<int>((50 / 3) * (pow(level, 3) - 6 * pow(level, 3) + (17 * level) - 11)) + 100;
+		this->expNext = (expNext * 2) + (level * 100);
 
 		this->statPoints++;
 		this->skillPoints++;
+
+		cout << "You are now level " << this->level << ".\n" << endl;
+	}
+	else
+	{
+		cout << "Not enough exp to level up.\n" << endl;
 	}
 }
 
 string Character::getAsString() const
 {
-	return to_string(xPos) + " " + to_string(yPos) + " " + name + " " + to_string(level) + " " + to_string(exp) + " " + to_string(strength) + " " + to_string(vitality) + " " + to_string(dexterity) + " " + to_string(intelligence) + " " + to_string(hp) + " " + to_string(stamina) + " " + to_string(statPoints) + " " + to_string(skillPoints);
+	return name + " " + to_string(distanceTraveled) + " " + to_string(gold) + " " + to_string(level) + " " + to_string(exp) + " " + to_string(strength) + " " + to_string(vitality) + " " + to_string(dexterity) + " " + to_string(intelligence) + " " + to_string(hp) + " " + to_string(stamina) + " " + to_string(statPoints) + " " + to_string(skillPoints);
+}
+
+void Character::updateStats()
+{
+	this->expNext = (expNext * 2) + (level * 100);
+
+	this->hpMax = (this->vitality * 2) + (this->strength / 2);
+	this->staminaMax = this->vitality + (this->vitality / 2) + (this->dexterity / 3);
+	this->damageMin = this->strength;
+	this->damageMax = this->strength + (this->level * 2);
+	this->defence = this->dexterity + (this->intelligence / 2);
+	this->accuracy = this->dexterity / 2;
+	this->luck = this->intelligence;
 }

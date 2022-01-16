@@ -8,6 +8,7 @@ class Character
 {
 public:
 	Character();
+	Character(string name, int distanceTraveled, int gold, int level, int exp, int strength, int vitality, int dexterity, int intelligence, int hp, int stamina, int statPoints, int SkillPoints);
 	virtual ~Character();
 
 	// Functions
@@ -15,10 +16,9 @@ public:
 	void printStats() const;
 	void levelUp();
 	string getAsString() const;
+	void updateStats();
 
 	// Accessors
-	inline const double& getX() const { return this->xPos; }
-	inline const double& getY() const { return this->yPos; }
 	inline const int& getDistanceTraveled() const { return this->distanceTraveled; }
 	inline const string& getName() const { return this->name; }
 	inline const int& getLevel() const { return this->level; }
@@ -35,10 +35,9 @@ public:
 	// Modifiers
 	inline void setDistanceTraveled(const int& distance) { this->distanceTraveled = distance; }
 	inline void travel() { this->distanceTraveled++; }
+	inline void gainExp(const int& exp) { this->exp += exp; }
 
 private:
-	double xPos;
-	double yPos;
 	int distanceTraveled;
 
 	Inventory inwentory;
