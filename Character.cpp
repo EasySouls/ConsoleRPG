@@ -101,7 +101,7 @@ void Character::initalize(std::string name)
 
 void Character::printStats() const
 {
-	cout << "-- Character sheet --" << endl;
+	cout << "-- Character sheet --\n" << endl;
 	cout << "Name: " << this->name << endl;
 	cout << "Level: " << this->level << endl;
 	cout << "Exp: " << this->exp << endl;
@@ -119,6 +119,9 @@ void Character::printStats() const
 	cout << "Accuracy " << this->accuracy << endl;
 	cout << "Luck: " << this->luck << endl;
 	cout << endl;
+	cout << "Stat points: " << this->statPoints << endl;
+	cout << "Skill points: " << this->skillPoints << endl;
+	cout << endl;
 
 }
 
@@ -132,6 +135,8 @@ void Character::levelUp()
 
 		this->statPoints++;
 		this->skillPoints++;
+
+		this->updateStats();
 
 		cout << "You are now level " << this->level << ".\n" << endl;
 	}
@@ -148,8 +153,6 @@ string Character::getAsString() const
 
 void Character::updateStats()
 {
-	this->expNext = (expNext * 2) + (level * 100);
-
 	this->hpMax = (this->vitality * 2) + (this->strength / 2);
 	this->staminaMax = this->vitality + (this->vitality / 2) + (this->dexterity / 3);
 	this->damageMin = this->strength;
@@ -157,4 +160,34 @@ void Character::updateStats()
 	this->defence = this->dexterity + (this->intelligence / 2);
 	this->accuracy = this->dexterity / 2;
 	this->luck = this->intelligence;
+}
+
+void Character::addToStat(int stat, int value)
+{
+	switch (stat)
+	{
+	case 1: //STR
+		this->strength += value;
+		updateStats();
+		cout << "Your strength has leveled up by " << value << endl;
+		break;
+	case 2: //VIT
+		this->vitality += value;
+		updateStats();
+		break;
+		cout << "Your vitality has leveled up by " << value << endl;
+	case 3: //DEX
+		this->dexterity += value;
+		updateStats();
+		break;
+		cout << "Your dexterity has leveled up by " << value << endl;
+	case 4: //INT
+		this->intelligence += value;
+		updateStats();
+		cout << "Your intelligence has leveled up by " << value << endl;
+		break;
+	default:
+		cout << "No such stat!\n" << endl;
+		break;
+	}
 }

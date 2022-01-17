@@ -17,6 +17,7 @@ public:
 	void levelUp();
 	string getAsString() const;
 	void updateStats();
+	void addToStat(int stat, int value);
 
 	// Accessors
 	inline const int& getDistanceTraveled() const { return this->distanceTraveled; }
@@ -31,11 +32,22 @@ public:
 	inline const int& getDamageMax() const { return this->damageMax; }
 	inline const int& getDefence() const { return this->defence; }
 	inline const int& getAccuracy() const { return this->accuracy; }
+	inline const int& getStatsPoints() const { return this->statPoints; }
+	inline const int& getSkillPoints() const { return this->skillPoints; }
+	inline const int& getStrenght() const { return this->strength; }
+	inline const int& getVitality() const { return this->vitality; }
+	inline const int& getDexterity() const { return this->dexterity; }
+	inline const int& getIntelligence() const { return this->intelligence; }
 
 	// Modifiers
 	inline void setDistanceTraveled(const int& distance) { this->distanceTraveled = distance; }
 	inline void travel() { this->distanceTraveled++; }
 	inline void gainExp(const int& exp) { this->exp += exp; }
+	inline void upgradeStrenght() { this->strength++; updateStats(); }
+	inline void upgradeVitality() { this->vitality++; updateStats(); }
+	inline void upgradeDexterity() { this->dexterity++; updateStats(); }
+	inline void upgradeIntelligence() { this->intelligence++; updateStats(); }
+	inline void addSkillPoints(int num) { this->skillPoints = this->skillPoints + num; }
 
 private:
 	int distanceTraveled;
