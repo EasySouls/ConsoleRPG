@@ -26,6 +26,7 @@ void Game::mainMenu()
 	system("CLS");*/
 
 	cout << "= MAIN MENU =" << endl << endl;;
+	cout << "Active character: " << this->characters[activeCharacter].getName() << " " << this->activeCharacter+1 << " / " << this->characters.size() << "\n" << endl;
 	if (this->characters[activeCharacter].getExp() >= this->characters[activeCharacter].getExpNext())
 	{
 		cout << "Level up available!\n" << endl;
@@ -39,6 +40,7 @@ void Game::mainMenu()
 	cout << "[6]: Create new character" << endl;
 	cout << "[7]: Save characters" << endl;
 	cout << "[8]: Load characters" << endl;
+	cout << "[9]: Select character" << endl;
 	cout << endl;
 
 	cout << "Choice: ";
@@ -96,6 +98,9 @@ void Game::mainMenu()
 		loadCharacters();
 		break;
 
+	case 9: //SELECT CHARACTER
+		selectCharacter();
+		break;
 	default:
 		break;
 	}
@@ -107,6 +112,16 @@ void Game::createNewCharacter()
 	cout << "Enter the name of your character: ";
 	getline(cin, name);
 	cout << "\n" << endl;
+
+	for (size_t i = 0; i < this->characters.size(); i++)
+	{
+		while (name == this->characters[i].getName())
+		{
+			cout << "Error! Character with the same name already exists!" << endl;
+			cout << "Enter the name of your character: ";
+			getline(cin, name);
+		}
+	}
 
 	characters.push_back(Character());
 	activeCharacter = characters.size() - 1;
@@ -235,10 +250,36 @@ void Game::loadCharacters()
 	}
 }
 
+void Game::selectCharacter()
+{
+	cout << "Select character: \n" << endl;
+
+	for (size_t i = 0; i < this->characters.size(); i++)
+	{
+		cout << "[" << i << "] " << this->characters[i].getName() << " (lvl " << this->characters[i].getLevel() << ")" << endl;
+	}
+
+	cout << "Choice: ";
+	cin >> this->choice;
+
+	while (cin.fail() || this->choice >= this->characters.size() || this->choice < 0)
+	{
+		cout << "Wrong input!" << endl;
+		cin.clear();
+		cin.ignore(100, '\n');
+
+		cout << "Select character: ";
+		cin >> this->choice;
+	}
+
+	this->activeCharacter = this->choice;
+	cout << this->characters[activeCharacter].getName() << " is selected.\n" << endl;
+}
+
 void Game::Travel()
 {
 	this->characters[activeCharacter].travel();
 
 	Event ev;
-	ev.generateEvent(this->characters[activeCharacter]);
+	ev.generateEvent(this->characters[activeCharacter], this->enemies);
 }

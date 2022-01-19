@@ -1,6 +1,7 @@
 #pragma once
 #include <stdlib.h>
 #include <string>
+#include"dArray.h"
 using namespace std;
 
 class Enemy

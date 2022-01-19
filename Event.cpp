@@ -10,7 +10,7 @@ Event::~Event()
 
 }
 
-void Event::generateEvent(Character &character)
+void Event::generateEvent(Character &character, dArray<Enemy>& enemies)
 {
 	int i = rand() % this->nrOfEvents;
 
@@ -18,7 +18,7 @@ void Event::generateEvent(Character &character)
 	{
 	case 0:
 		// Enemy encounter
-		enemyEncounter(character);
+		enemyEncounter(character, enemies);
 		break;
 	case 1:
 		// Puzzle
@@ -32,9 +32,16 @@ void Event::generateEvent(Character &character)
 }
 
 // Different events
-void Event::enemyEncounter(Character& character)
+void Event::enemyEncounter(Character& character, dArray<Enemy>& enemies)
 {
-	//while()
+	bool escaped = false;
+	bool playerDefeated = false;
+	bool enemyDefeated = false;
+	
+	while (!escaped && !playerDefeated && !enemyDefeated)
+	{
+
+	}
 }
 
 void Event::puzzleEncounter(Character& character)

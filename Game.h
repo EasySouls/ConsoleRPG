@@ -6,6 +6,18 @@
 
 class Game
 {
+private:
+	int choice;
+	bool playing;
+
+	// Character related
+	int activeCharacter;
+	vector <Character> characters;
+	string fileName;
+
+	// Enemies
+	dArray<Enemy> enemies;
+
 public:
 	Game();
 	virtual ~Game();
@@ -17,18 +29,10 @@ public:
 	void levelUpCharacter();
 	void saveCharacters();
 	void loadCharacters();
+	void selectCharacter();
 	void Travel();
 
 	// Accessors
 	inline bool getPlaying() const { return this->playing; }
-
-private:
-	int choice;
-	bool playing;
-
-	// Character related
-	int activeCharacter;
-	vector <Character> characters;
-	string fileName;
 };
 
