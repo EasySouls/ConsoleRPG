@@ -191,3 +191,15 @@ void Character::addToStat(int stat, int value)
 		break;
 	}
 }
+
+void Character::takeDamage(const int damage)
+{
+	this->hp -= damage;
+
+	if (this->hp <= 0)
+	{
+		this->hp = 0;
+
+		//character dies
+	}
+}

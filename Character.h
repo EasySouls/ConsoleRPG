@@ -27,6 +27,7 @@ public:
 	inline const int& getExpNext() const { return this->expNext; }
 	inline const int& getHP() const { return this->hp; }
 	inline const int& getHPMax() const { return this->hpMax; }
+	inline const bool isAlive() { return this->hp > 0; }
 	inline const int& getStamina() const { return this->stamina; }
 	inline const int& getDamageMin() const { return this->damageMin; }
 	inline const int& getDamageMax() const { return this->damageMax; }
@@ -48,6 +49,7 @@ public:
 	inline void upgradeDexterity() { this->dexterity++; updateStats(); }
 	inline void upgradeIntelligence() { this->intelligence++; updateStats(); }
 	inline void addSkillPoints(int num) { this->skillPoints = this->skillPoints + num; }
+	void takeDamage(const int damage);
 
 private:
 	int distanceTraveled;
