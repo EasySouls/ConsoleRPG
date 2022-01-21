@@ -1,13 +1,13 @@
 #include "Puzzle.h"
 
-Puzzle::Puzzle(string fileName)
+Puzzle::Puzzle(std::string fileName)
 {
 	this->correctAnswer = 0;
 
-	ifstream inFile(fileName);
+	std::ifstream inFile(fileName);
 
 	int nrOfAns = 0;
-	string answer = "";
+	std::string answer = "";
 	int correctAns = 0;
 
 	if (inFile.is_open())
@@ -32,12 +32,12 @@ Puzzle::~Puzzle()
 {
 }
 
-string Puzzle::getAsString()
+std::string Puzzle::getAsString()
 {
-	string answers = "";
+	std::string answers = "";
 	for (size_t i = 0; i < this->answers.size(); i++)
 	{
-		answers += to_string(i) + ": " + this->answers[i] + "\n";
+		answers += std::to_string(i) + ": " + this->answers[i] + "\n";
 	}
 
 	/*return this->question + "\n" + "\n" + answers + "\n" + to_string(this->correctAnswer) + "\n";*/

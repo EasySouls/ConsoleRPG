@@ -37,23 +37,35 @@ void Event::enemyEncounter(Character& character, dArray<Enemy>& enemies)
 	bool playerTurn = false;
 	int choice = 0;
 
-	// Coin toos for turn
+	// Coin toss for turn
 	int coinToss = rand() % 2 + 1;
-
 	if (coinToss == 1)
 		playerTurn = true;
 	else 
 		playerTurn = false;
 
+	// Ending conditions
 	bool escaped = false;
 	bool playerDefeated = false;
 	bool enemiesDefeated = false;
 
-	int nrOfEnemies = rand() % 5;
+	// Enemies
+	int nrOfEnemies = rand() % 5 + 1;
 	for (size_t i = 0; i < nrOfEnemies; i++)
 	{
 		enemies.push(Enemy(character.getLevel()));
 	}
+
+	// Combat variables
+	int attackRollPlayer = 0;
+	int attackRollEnemy = 0;
+	int defenceRoll = 0;
+	int battleChoice = 0;
+	int damage = 0;
+	int expGained = 0;
+	int playerTotal = 0;
+	int enemyTotal = 0;
+	int combatTotal = 0;
 	
 	while (!escaped && !playerDefeated && !enemiesDefeated)
 	{
@@ -86,22 +98,75 @@ void Event::enemyEncounter(Character& character, dArray<Enemy>& enemies)
 				cout << "[3] Use Item" << endl;
 				cout << endl;
 
-				std::cout << endl << "Choice: ";
+				cout << endl << "Choice: ";
 				cin >> choice;
 			}
 
 			// Moves
 			switch (choice)
 			{
-			case 0:
+			case 0: // Escape
 				escaped = true;
 				break;
-			case 1:
+
+			case 1: // Attack
+				cout << "Select enemy: " << endl;
+				for (size_t i = 0; i < enemies.size(); i++)
+				{
+					cout << "[" << i << "]: Lvl " << enemies[i].getLevel() << " - Hp: " << enemies[i].getHpMax() << "/" << enemies[i].getHp() << endl;
+				}
+				cout << endl;
+				cout << "Choice: ";
+				cin >> battleChoice;
+
+				while (cin.fail() || battleChoice >= enemies.size() || battleChoice < 0)
+				{
+						cout << "Wrong input! Choose again!" << endl;
+						cin.clear();
+						cout << "Choice: ";
+						cin >> battleChoice;
+				}
+
+				// Attack roll
+
+				combatTotal = enemies[battleChoice].getDefence() + character.getAccuracy();
+				enemyTotal = (enemies[battleChoice].getDefence() / combatTotal) * 100;
+				playerTotal = (character.getAccuracy() / combatTotal) * 100;
+				attackRollPlayer = rand() % playerTotal;
+				attackRollEnemy = rand() % enemyTotal;
+
+				if (attackRollPlayer > attackRollEnemy) // On a hit
+				{ 
+					damage = character.getDamage();
+					cout << "You rolled a hit (" << attackRollPlayer << ")" << endl;
+					enemies[battleChoice].takeDamage(damage);
+					cout << "Lvl " << enemies[battleChoice].getLevel() << " enemy has taken " << damage << " damage." << endl;
+					cout << endl;
+
+					if (!enemies[battleChoice].isAlive()) // If an enemy dies
+					{
+						expGained = enemies[battleChoice].getExp();
+						character.gainExp(expGained);
+						enemies.remove(battleChoice);
+						cout << "An enemy has died." << endl;
+						cout << "You have gained " << expGained << " exp." << endl;
+						cout << endl;
+					}
+				}
+				else // On a miss 
+				{ 
+					cout << "You rolled a miss (" << attackRollPlayer << ")" << endl;
+					cout << "Lvl " << enemies[battleChoice].getLevel() << " enemy has dodged your hit." << endl;
+					cout << endl;
+				}
 				break;
-			case 2:
+
+			case 2: // Defend
 				break;
-			case 3:
+
+			case 3: // Use item
 				break;
+
 			default:
 				break;
 			}

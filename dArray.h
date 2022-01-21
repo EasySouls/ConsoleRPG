@@ -1,6 +1,6 @@
 #pragma once
 
-template <typename T>
+template<typename T>
 class dArray
 {
 private:
@@ -11,7 +11,6 @@ private:
 
 	void expand();
 	void initialize(unsigned from);
-
 public:
 	dArray(unsigned size = 5);
 	dArray(const dArray& obj);
@@ -20,14 +19,13 @@ public:
 	T& operator[] (const unsigned index);
 	void operator= (const dArray& obj);
 
-	unsigned size();
 	unsigned maxCap();
+	unsigned size();
 	void push(const T element);
 	void remove(const unsigned index, bool ordered = false);
-
 };
 
-template <typename T>
+template<typename T>
 dArray<T>::dArray(unsigned size)
 {
 	this->initialCap = size;
@@ -39,7 +37,7 @@ dArray<T>::dArray(unsigned size)
 	this->initialize(0);
 }
 
-template <typename T>
+template<typename T>
 dArray<T>::dArray(const dArray& obj)
 {
 	this->initialCap = obj.initialCap;
@@ -56,7 +54,7 @@ dArray<T>::dArray(const dArray& obj)
 	this->initialize(0);
 }
 
-template <typename T>
+template<typename T>
 dArray<T>::~dArray()
 {
 	for (size_t i = 0; i < this->nrOfEl; i++)
@@ -66,16 +64,16 @@ dArray<T>::~dArray()
 	delete[] arr;
 }
 
-template <typename T>
+template<typename T>
 T& dArray<T>::operator[] (const unsigned index)
 {
-	if (index < 0 || index > this->nrOfEl)
-		throw "OUT OF BOUNDS INDEXING OPERATOR!";
+	if (index < 0 || index >= this->nrOfEl)
+		throw "OUT OF BOUNDS INDEXING OPERATOR.";
 
 	return *this->arr[index];
 }
 
-template <typename T>
+template<typename T>
 void dArray<T>::operator= (const dArray& obj)
 {
 	for (size_t i = 0; i < this->nrOfEl; i++)
@@ -98,7 +96,7 @@ void dArray<T>::operator= (const dArray& obj)
 	this->initialize(0);
 }
 
-template <typename T>
+template<typename T>
 void dArray<T>::expand()
 {
 	this->cap *= 2;
@@ -110,13 +108,14 @@ void dArray<T>::expand()
 		tempArr[i] = this->arr[i];
 	}
 
-	delete[] arr;
+	delete[]arr;
 
 	this->arr = tempArr;
+
 	this->initialize(this->nrOfEl);
 }
 
-template <typename T>
+template<typename T>
 void dArray<T>::initialize(unsigned from)
 {
 	for (size_t i = from; i < this->cap; i++)
@@ -125,38 +124,38 @@ void dArray<T>::initialize(unsigned from)
 	}
 }
 
-template <typename T>
-unsigned dArray<T>::size()
-{
-	return this->nrOfEl;
-}
-
-template <typename T>
+template<typename T>
 unsigned dArray<T>::maxCap()
 {
 	return this->cap;
 }
 
-template <typename T>
+template<typename T>
+unsigned dArray<T>::size()
+{
+	return this->nrOfEl;
+}
+
+template<typename T>
 void dArray<T>::push(const T element)
 {
-	if (this->nrOfEl > this->cap)
+	if (this->nrOfEl >= this->cap)
 		this->expand();
 
 	this->arr[this->nrOfEl++] = new T(element);
 }
 
-template <typename T>
+template<typename T>
 void dArray<T>::remove(const unsigned index, bool ordered)
 {
-	if (index < 0 || index > this->nrOfEl)
-		throw "OUT OF BOUNDS REMOVE!";
+	if (index < 0 || index >= this->nrOfEl)
+		throw "OUT OF BOUNDS REMOVE.";
 
 	if (ordered)
 	{
 		delete this->arr[index];
 
-		for (size_t i = 0; i < this->nrOfEl-1; i++)
+		for (size_t i = 0; i < this->nrOfEl - 1; i++)
 		{
 			this->arr[i] = this->arr[i + 1];
 		}
@@ -168,6 +167,7 @@ void dArray<T>::remove(const unsigned index, bool ordered)
 		delete this->arr[index];
 
 		this->arr[index] = this->arr[this->nrOfEl - 1];
+
 		this->arr[--this->nrOfEl] = nullptr;
 	}
 }

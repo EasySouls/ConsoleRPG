@@ -1,5 +1,4 @@
 #pragma once
-#include <stdlib.h>
 #include "Puzzle.h"
 #include "Character.h"
 

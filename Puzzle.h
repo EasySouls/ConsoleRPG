@@ -3,19 +3,18 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
-using namespace std;
 
 class Puzzle
 {
 private:
-	string question;
-	vector<string> answers;
+	std::string question;
+	std::vector<std::string> answers;
 	int correctAnswer;
 
 public:
-	Puzzle(string fileName);
+	Puzzle(std::string fileName);
 	virtual ~Puzzle();
-	string getAsString();
+	std::string getAsString();
 
 	inline const int& getCorrectAns() const { return this->correctAnswer; }
 };

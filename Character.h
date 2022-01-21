@@ -2,10 +2,43 @@
 #include "Inventory.h"
 #include "Enemy.h"
 
-using namespace std;
 
 class Character
 {
+private:
+	int distanceTraveled;
+
+	Inventory inwentory;
+	Weapon weapon;
+	Armor armor_head;
+	Armor armor_chest;
+	Armor armor_arms;
+	Armor armor_legs;
+	int gold;
+
+	string name;
+	int level;
+	int exp;
+	int expNext;
+
+	int strength;
+	int vitality;
+	int dexterity;
+	int intelligence;
+
+	int hp;
+	int hpMax;
+	int stamina;
+	int staminaMax;
+	int damageMin;
+	int damageMax;
+	int defence;
+	int accuracy;
+	int luck;
+
+	int statPoints;
+	int skillPoints;
+
 public:
 	Character();
 	Character(string name, int distanceTraveled, int gold, int level, int exp, int strength, int vitality, int dexterity, int intelligence, int hp, int stamina, int statPoints, int SkillPoints);
@@ -18,6 +51,7 @@ public:
 	string getAsString() const;
 	void updateStats();
 	void addToStat(int stat, int value);
+	void takeDamage(const int damage);
 
 	// Accessors
 	inline const int& getDistanceTraveled() const { return this->distanceTraveled; }
@@ -39,6 +73,7 @@ public:
 	inline const int& getVitality() const { return this->vitality; }
 	inline const int& getDexterity() const { return this->dexterity; }
 	inline const int& getIntelligence() const { return this->intelligence; }
+	inline const int& getDamage() const { return rand() % this->damageMax + this->damageMin; }
 
 	// Modifiers
 	inline void setDistanceTraveled(const int& distance) { this->distanceTraveled = distance; }
@@ -49,40 +84,5 @@ public:
 	inline void upgradeDexterity() { this->dexterity++; updateStats(); }
 	inline void upgradeIntelligence() { this->intelligence++; updateStats(); }
 	inline void addSkillPoints(int num) { this->skillPoints = this->skillPoints + num; }
-	void takeDamage(const int damage);
-
-private:
-	int distanceTraveled;
-
-	Inventory inwentory;
-	Weapon weapon;
-	Armor armor_head;
-	Armor armor_chest;
-	Armor armor_arms;
-	Armor armor_legs;
-	int gold;
-
-	string name;
-	int level;
-	int exp;
-	int expNext;
-
-	int strength;
-	int vitality;
-	int dexterity;
-	int intelligence;
-	
-	int hp;
-	int hpMax;
-	int stamina;
-	int staminaMax;
-	int damageMin;
-	int damageMax;
-	int defence;
-	int accuracy;
-	int luck;
-
-	int statPoints;
-	int skillPoints;
 };
 
