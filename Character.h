@@ -49,6 +49,7 @@ public:
 	void printStats() const;
 	void levelUp();
 	string getAsString() const;
+	string getAsString2() const;
 	void updateStats();
 	void addToStat(int stat, int value);
 	void takeDamage(const int damage);
@@ -83,6 +84,6 @@ public:
 	inline void upgradeVitality() { this->vitality++; updateStats(); }
 	inline void upgradeDexterity() { this->dexterity++; updateStats(); }
 	inline void upgradeIntelligence() { this->intelligence++; updateStats(); }
-	inline void addSkillPoints(int num) { this->skillPoints = this->skillPoints + num; }
+	inline void addStatPoints(int num) { this->statPoints = this->statPoints + num; }
 };
 

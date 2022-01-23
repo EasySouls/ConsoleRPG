@@ -69,7 +69,7 @@ Character::~Character()
 
 
 // Functions
-void Character::initalize(std::string name)
+void Character::initalize(string name)
 {
 	this->distanceTraveled = 0;
 
@@ -85,14 +85,14 @@ void Character::initalize(std::string name)
 	this->dexterity = 5;
 	this->intelligence = 5;
 
-	this->hpMax = (this->vitality * 2) + (this->strength / 2);
+	this->hpMax = (this->vitality * 2) + (this->strength / 2) + (this->level * 10);
 	this->hp = hpMax;
 	this->staminaMax = this->vitality + (this->vitality/2) + (this->dexterity/3);
 	this->stamina = staminaMax;
 	this->damageMin = this->strength;
 	this->damageMax = this->strength + (this->level * 2);
-	this->defence = this->dexterity + (this->intelligence/2);
-	this->accuracy = this->dexterity / 2;
+	this->defence = this->dexterity + (this->intelligence / 2);
+	this->accuracy = (this->dexterity / 2) + intelligence;
 	this->luck = this->intelligence;
 
 	this->statPoints = 0;
@@ -104,6 +104,10 @@ void Character::printStats() const
 	cout << "-- Character sheet --\n" << endl;
 	cout << "Name: " << this->name << endl;
 	cout << "Level: " << this->level << endl;
+	cout << endl;
+	cout << "Gold: " << this->gold << endl;
+	cout << "Distance traveled: " << this->distanceTraveled << endl;
+	cout << endl;
 	cout << "Exp: " << this->exp << endl;
 	cout << "Exp to next level: " << this->expNext << endl;
 	cout <<  endl;
@@ -151,14 +155,20 @@ string Character::getAsString() const
 	return name + " " + to_string(distanceTraveled) + " " + to_string(gold) + " " + to_string(level) + " " + to_string(exp) + " " + to_string(strength) + " " + to_string(vitality) + " " + to_string(dexterity) + " " + to_string(intelligence) + " " + to_string(hp) + " " + to_string(stamina) + " " + to_string(statPoints) + " " + to_string(skillPoints);
 }
 
+string Character::getAsString2() const
+{
+	return name + ", " + to_string(distanceTraveled) + " distance traveled, " + to_string(gold) + " gold, lvl " + to_string(level) + ", " + to_string(exp) + " exp, " + to_string(strength) + " strength, " + to_string(vitality) + " vitality, " + to_string(dexterity) + " dexterity, " + to_string(intelligence) + " intelligence, " + to_string(hp) + " hp, " + to_string(stamina) + " stamina, " + to_string(statPoints) + " stat points and " + to_string(skillPoints) + " skill points\n";
+}
+
 void Character::updateStats()
 {
-	this->hpMax = (this->vitality * 2) + (this->strength / 2);
+	this->hpMax = (this->vitality * 2) + (this->strength / 2) + (this->level * 10);
 	this->staminaMax = this->vitality + (this->vitality / 2) + (this->dexterity / 3);
+	this->stamina = staminaMax;
 	this->damageMin = this->strength;
 	this->damageMax = this->strength + (this->level * 2);
 	this->defence = this->dexterity + (this->intelligence / 2);
-	this->accuracy = this->dexterity / 2;
+	this->accuracy = (this->dexterity / 2) + intelligence;
 	this->luck = this->intelligence;
 }
 

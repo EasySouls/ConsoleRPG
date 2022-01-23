@@ -21,89 +21,115 @@ void Game::initGame()
 
 void Game::mainMenu()
 {
-	/*cout << "ENTER to continue..." << endl;
+	cout << "ENTER to continue..." << endl;
 	cin.get();
-	system("CLS");*/
+	/*system("CLS");*/
 
-	cout << "= MAIN MENU =" << endl << endl;;
-	cout << "Active character: " << this->characters[activeCharacter].getName() << " " << this->activeCharacter+1 << " / " << this->characters.size() << "\n" << endl;
-	if (this->characters[activeCharacter].getExp() >= this->characters[activeCharacter].getExpNext())
+	if (characters[activeCharacter].isAlive())
 	{
-		cout << "Level up available!\n" << endl;
-	}
-	cout << "[0]: Quit" << endl;
-	cout << "[1]: Travel" << endl;
-	cout << "[2]: Shop" << endl;
-	cout << "[3]: Level up" << endl;
-	cout << "[4]: Rest" << endl;
-	cout << "[5]: Character sheet" << endl;
-	cout << "[6]: Create new character" << endl;
-	cout << "[7]: Save characters" << endl;
-	cout << "[8]: Load characters" << endl;
-	cout << "[9]: Select character" << endl;
-	cout << endl;
+		cout << "= MAIN MENU =" << endl << endl;;
+		cout << "Active character: " << this->characters[activeCharacter].getName() << " " << this->activeCharacter+1 << " / " << this->characters.size() << "\n" << endl;
+		if (this->characters[activeCharacter].getExp() >= this->characters[activeCharacter].getExpNext())
+		{
+			cout << "Level up available!\n" << endl;
+		}
+		cout << "[0]: Quit" << endl;
+		cout << "[1]: Travel" << endl;
+		cout << "[2]: Shop" << endl;
+		cout << "[3]: Level up" << endl;
+		cout << "[4]: Rest" << endl;
+		cout << "[5]: Character sheet" << endl;
+		cout << "[6]: Create new character" << endl;
+		cout << "[7]: Save characters" << endl;
+		cout << "[8]: Load characters" << endl;
+		cout << "[9]: Select character" << endl;
+		cout << endl;
 
-	cout << "Choice: ";
-	cin >> this->choice;
-	cout << endl;
-
-	while (cin.fail())
-	{
-		cout << "Wrong input!" << endl;
-		cin.clear();
-		cin.ignore(100, '\n');
-
-		std::cout << endl << "Choice :";
+		cout << "Choice: ";
 		cin >> this->choice;
+		cout << endl;
+
+		while (cin.fail())
+		{
+			cout << "Wrong input!" << endl;
+			cin.clear();
+			cin.ignore(100, '\n');
+
+			std::cout << endl << "Choice :";
+			cin >> this->choice;
+		}
+
+		/*cin.ignore(100, '\n');
+		cout << endl;*/
+
+		switch (this->choice)
+		{
+		case 0: //QUIT
+			playing = false;
+			break;
+
+		case 1: //TRAVEL
+			Travel();
+			break;
+
+		case 2: //SHOP
+			break;
+
+		case 3: //LEVEL UP
+			levelUpCharacter();
+			break;
+
+		case 4: //REST
+			break;
+
+		case 5: //CHARACTER SHEET
+			characters[activeCharacter].printStats();
+			break;
+
+		case 6: //CREATE NEW CHARACTER
+			cin.ignore();
+			createNewCharacter();
+			saveCharacters();
+			break;
+
+		case 7: //SAVE CHARACTER
+			saveCharacters();
+			break;
+
+		case 8: //LOAD CHARACTERS
+			loadCharacters();
+			break;
+
+		case 9: //SELECT CHARACTER
+			selectCharacter();
+			break;
+		default:
+			break;
+		}
 	}
-
-	/*cin.ignore(100, '\n');
-	cout << endl;*/
-
-	switch (this->choice)
+	else
 	{
-	case 0: //QUIT
-		playing = false;
-		break;
+		cout << "YOU ARE DEAD!\n" << endl;
+		cout << "Press [1] to load a previous character or press [0] to quit" << endl;
+		cin >> this->choice;
 
-	case 1: //TRAVEL
-		Travel();
-		break;
+		while (cin.fail() || this->choice < 0 || this->choice > 1)
+		{
+			cout << "Even after death, you do not care enough to avoid your mistakes." << endl;
+			cout << "Your options were [1] and [0]" << endl;
+			cin >> this->choice;
+			cout << endl;
+		}
 
-	case 2: //SHOP
-		break;
-
-	case 3: //LEVEL UP
-		levelUpCharacter();
-		break;
-
-	case 4: //REST
-		break;
-
-	case 5: //CHARACTER SHEET
-		characters[activeCharacter].printStats();
-		break;
-
-	case 6: //CREATE NEW CHARACTER
-		cin.ignore();
-		createNewCharacter();
-		saveCharacters();
-		break;
-
-	case 7: //SAVE CHARACTER
-		saveCharacters();
-		break;
-
-	case 8: //LOAD CHARACTERS
-		loadCharacters();
-		break;
-
-	case 9: //SELECT CHARACTER
-		selectCharacter();
-		break;
-	default:
-		break;
+		if (this->choice == 1)
+			loadCharacters();
+		else
+		{
+			cout << "You have failed to live up to the expectations, adventurer.\n" << endl;
+			playing = false;
+		}
 	}
+
 }
 
 void Game::createNewCharacter()
@@ -160,22 +186,22 @@ void Game::levelUpCharacter()
 		{
 		case 1:
 			this->characters[activeCharacter].upgradeStrenght();
-			this->characters[activeCharacter].addSkillPoints(-1);
+			this->characters[activeCharacter].addStatPoints(-1);
 			cout << "Strenght upgraded!\n" << endl;
 			break;
 		case 2:
 			this->characters[activeCharacter].upgradeVitality();
-			this->characters[activeCharacter].addSkillPoints(-1);
+			this->characters[activeCharacter].addStatPoints(-1);
 			cout << "Vitality upgraded!\n" << endl;
 			break;
 		case 3:
 			this->characters[activeCharacter].upgradeDexterity();
-			this->characters[activeCharacter].addSkillPoints(-1);
+			this->characters[activeCharacter].addStatPoints(-1);
 			cout << "Dexterity upgraded!\n" << endl;
 			break;
 		case 4:
 			this->characters[activeCharacter].upgradeIntelligence();
-			this->characters[activeCharacter].addSkillPoints(-1);
+			this->characters[activeCharacter].addStatPoints(-1);
 			cout << "Intelligence upgraded!\n" << endl;
 			break;
 		default:

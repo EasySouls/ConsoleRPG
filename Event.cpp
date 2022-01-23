@@ -53,7 +53,7 @@ void Event::enemyEncounter(Character& character, dArray<Enemy>& enemies)
 	int nrOfEnemies = rand() % 5 + 1;
 	for (size_t i = 0; i < nrOfEnemies; i++)
 	{
-		enemies.push(Enemy(character.getLevel()));
+		enemies.push(Enemy(character.getLevel() + rand()%3));
 	}
 
 	// Combat variables
@@ -130,17 +130,20 @@ void Event::enemyEncounter(Character& character, dArray<Enemy>& enemies)
 				// Attack roll
 
 				combatTotal = enemies[battleChoice].getDefence() + character.getAccuracy();
-				enemyTotal = (enemies[battleChoice].getDefence() / combatTotal) * 100;
-				playerTotal = (character.getAccuracy() / combatTotal) * 100;
-				attackRollPlayer = rand() % playerTotal;
-				attackRollEnemy = rand() % enemyTotal;
+				enemyTotal = (enemies[battleChoice].getDefence() / (double)combatTotal) * 100;
+				playerTotal = (character.getAccuracy() / (double)combatTotal) * 100;
+				attackRollPlayer = rand() % playerTotal + 1;
+				attackRollEnemy = rand() % enemyTotal + 1;
+
+				//// Debug
+				//cout << combatTotal<< " " << enemyTotal << " " << playerTotal << " " << attackRollPlayer << " " << attackRollEnemy << endl;
 
 				if (attackRollPlayer > attackRollEnemy) // On a hit
 				{ 
 					damage = character.getDamage();
 					cout << "You rolled a hit (" << attackRollPlayer << ")" << endl;
 					enemies[battleChoice].takeDamage(damage);
-					cout << "Lvl " << enemies[battleChoice].getLevel() << " enemy has taken " << damage << " damage." << endl;
+					cout << "Lvl " << enemies[battleChoice].getLevel() << " enemy has taken " << damage << " damage with a failed roll (" << attackRollEnemy << ")" << endl;
 					cout << endl;
 
 					if (!enemies[battleChoice].isAlive()) // If an enemy dies
@@ -156,7 +159,7 @@ void Event::enemyEncounter(Character& character, dArray<Enemy>& enemies)
 				else // On a miss 
 				{ 
 					cout << "You rolled a miss (" << attackRollPlayer << ")" << endl;
-					cout << "Lvl " << enemies[battleChoice].getLevel() << " enemy has dodged your hit." << endl;
+					cout << "Lvl " << enemies[battleChoice].getLevel() << " enemy has dodged your hit (" << attackRollEnemy << ")" << endl;
 					cout << endl;
 				}
 				break;
@@ -176,9 +179,42 @@ void Event::enemyEncounter(Character& character, dArray<Enemy>& enemies)
 		}
 		else if (!playerTurn && !escaped && !enemiesDefeated) // On enemies' turn
 		{
+			cout << "= Enemy turn =\n" << endl;
+
+
+			// Enemy attack
 			for (size_t i = 0; i < enemies.size(); i++)
 			{
-				// The enemy attacks the player
+				combatTotal = enemies[i].getAccuracy() + character.getDefence();
+				enemyTotal = (enemies[i].getAccuracy() / (double)combatTotal) * 100;
+				playerTotal = (character.getDefence() / (double)combatTotal) * 100;
+				attackRollPlayer = rand() % playerTotal + 1;
+				attackRollEnemy = rand() % enemyTotal + 1;
+
+				if (attackRollEnemy > attackRollPlayer) // On a hit
+				{
+					damage = enemies[i].getDamage();
+					cout << "Enemy " << i << " rolled a hit (" << attackRollEnemy << ")" << endl;
+					cout << "You failed to deflect the blow (" << attackRollPlayer << ")" << endl;
+					character.takeDamage(damage);
+					cout << "You have taken " << damage << " damage." << endl;
+					cout << endl;
+
+					if (!character.isAlive()) // If the player dies
+					{
+						cout << "You have been killed!" << endl;
+						cout << endl;
+						playerDefeated = true;
+
+						//TODO player to lose exp or something like that
+					}
+				}
+				else // On a miss 
+				{
+					cout << "Enemy " << i << " rolled a miss(" << attackRollEnemy << ")" << endl;
+					cout << "You have dodged (" << attackRollPlayer << ") the enemy's hit." << endl;
+					cout << endl;
+				}
 			}
 			// End turn
 			playerTurn = true;
