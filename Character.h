@@ -53,6 +53,7 @@ public:
 	void updateStats();
 	void addToStat(int stat, int value);
 	void takeDamage(const int damage);
+	void heal(const int value);
 
 	// Accessors
 	inline const int& getDistanceTraveled() const { return this->distanceTraveled; }

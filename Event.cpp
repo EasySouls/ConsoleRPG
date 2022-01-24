@@ -51,9 +51,18 @@ void Event::enemyEncounter(Character& character, dArray<Enemy>& enemies)
 
 	// Enemies
 	int nrOfEnemies = rand() % 5 + 1;
+
 	for (size_t i = 0; i < nrOfEnemies; i++)
 	{
-		enemies.push(Enemy(character.getLevel() + rand()%3));
+		if (character.getLevel() < 3)
+		{
+			enemies.push(Enemy(character.getLevel() + rand() % 2));
+		}
+		else
+		{
+			enemies.push(Enemy(character.getLevel() + rand() % 3));
+		}
+
 	}
 
 	// Combat variables
@@ -73,6 +82,7 @@ void Event::enemyEncounter(Character& character, dArray<Enemy>& enemies)
 		{
 			// Combat UI
 			cout << " = BATTLE MENU = \n" << endl;
+			cout << "HP: " << character.getHP() << " / " << character.getHPMax() << "\n" << endl;
 			cout << "[0] Escape" << endl;
 			cout << "[1] Attack" << endl;
 			cout << "[2] Defend" << endl;
@@ -179,8 +189,11 @@ void Event::enemyEncounter(Character& character, dArray<Enemy>& enemies)
 		}
 		else if (!playerTurn && !escaped && !enemiesDefeated) // On enemies' turn
 		{
-			cout << "= Enemy turn =\n" << endl;
+			cout << "Press any key to continue...\n" << endl;
+			cin.ignore();
+			cin.get();
 
+			cout << "= Enemy turn =\n" << endl;
 
 			// Enemy attack
 			for (size_t i = 0; i < enemies.size(); i++)
@@ -198,6 +211,7 @@ void Event::enemyEncounter(Character& character, dArray<Enemy>& enemies)
 					cout << "You failed to deflect the blow (" << attackRollPlayer << ")" << endl;
 					character.takeDamage(damage);
 					cout << "You have taken " << damage << " damage." << endl;
+					cout << "Remaining hp: "  << character.getHP() << " / " << character.getHPMax() << "\n" << endl;
 					cout << endl;
 
 					if (!character.isAlive()) // If the player dies

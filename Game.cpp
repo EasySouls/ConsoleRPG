@@ -3,6 +3,7 @@
 Game::Game()
 {
 	choice = 0;
+	canRest = false;
 	playing = true;
 	activeCharacter = 0;
 	fileName = "characters.txt";
@@ -22,6 +23,7 @@ void Game::initGame()
 void Game::mainMenu()
 {
 	cout << "ENTER to continue..." << endl;
+	cin.ignore();
 	cin.get();
 	/*system("CLS");*/
 
@@ -80,6 +82,7 @@ void Game::mainMenu()
 			break;
 
 		case 4: //REST
+			Rest();
 			break;
 
 		case 5: //CHARACTER SHEET
@@ -122,7 +125,10 @@ void Game::mainMenu()
 		}
 
 		if (this->choice == 1)
+		{
 			loadCharacters();
+			selectCharacter();
+		}
 		else
 		{
 			cout << "You have failed to live up to the expectations, adventurer.\n" << endl;
@@ -308,4 +314,31 @@ void Game::Travel()
 
 	Event ev;
 	ev.generateEvent(this->characters[activeCharacter], this->enemies);
+	canRest = true;
+}
+
+void Game::Rest()
+{
+	if (canRest)
+	{
+		if (this->characters[activeCharacter].getHPMax() == this->characters[activeCharacter].getHP())
+		{
+			cout << "You are already at max hp.\n" << endl;
+		}
+		else 
+		{
+			cout << "You take a rest under a nearby tree and regain some of you hp" << endl;
+			int level = characters[activeCharacter].getLevel();
+			characters[activeCharacter].heal(level * 10);
+			canRest = false;
+			cout << "You healed for" << level * 10 << " points" << endl;
+			cout << endl;
+		}
+	}
+	else
+	{
+		cout << "You have already taken a rest this day" << endl;
+		cout << "Only after traveling will you be able to rest again" << endl;
+		cout << endl;
+	}
 }

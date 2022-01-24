@@ -9,6 +9,7 @@ class Game
 private:
 	int choice;
 	bool playing;
+	bool canRest;
 
 	// Character related
 	int activeCharacter;
@@ -31,6 +32,7 @@ public:
 	void loadCharacters();
 	void selectCharacter();
 	void Travel();
+	void Rest();
 
 	// Accessors
 	inline bool getPlaying() const { return this->playing; }

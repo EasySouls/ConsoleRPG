@@ -213,3 +213,10 @@ void Character::takeDamage(const int damage)
 		//character dies
 	}
 }
+
+void Character::heal(const int value)
+{
+	this->hp += value;
+	if (this->hp > this->hpMax)
+		this->hp = this->hpMax;
+}
